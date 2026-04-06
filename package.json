@@ -1,0 +1,43 @@
+{
+    "name": "vscode-manifest-types",
+    "version": "0.1.0",
+    "description": "Generate TypeScript typings from a VSCode Extension `package.json`",
+    "keywords": [
+        "vscode",
+        "extension",
+        "typescript",
+        "manifest",
+        "cli",
+        "types"
+    ],
+    "license": "MIT",
+    "author": "Richard Robertson",
+    "type": "module",
+    "main": "out/index.js",
+    "types": "out/index.d.ts",
+    "files": [
+        "out",
+        "LICENSE",
+        "README.md"
+    ],
+    "bin": {
+        "vscode-manifest-types": "out/bin.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "prepare": "npm run build"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.4.9",
+        "@types/babel__helper-validator-identifier": "^7.15.2",
+        "@types/node": "^25.5.0",
+        "typescript": "^6.0.2"
+    },
+    "dependencies": {
+        "@babel/helper-validator-identifier": "^7.28.5",
+        "change-case": "^5.4.4",
+        "commander": "^14.0.3",
+        "json-schema-to-typescript": "^15.0.4",
+        "jsonc-parser": "^3.3.1"
+    }
+}

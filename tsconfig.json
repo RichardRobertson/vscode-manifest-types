@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "nodenext",
+        "target": "ES2022",
+        "moduleResolution": "nodenext",
+        "outDir": "out",
+        "lib": ["ES2022"],
+        "types": ["node"],
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "rootDir": "src",
+        "strict": true
+    }
+}
