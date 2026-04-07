@@ -67,10 +67,10 @@ export class IndentedStringWriter {
         for (const line of lines) {
             if (line === IncreaseIndent) {
                 this.increaseIndent();
-                return;
+                continue;
             } else if (line === DecreaseIndent) {
                 this.decreaseIndent();
-                return;
+                continue;
             }
             this.writeLine(line);
         }
