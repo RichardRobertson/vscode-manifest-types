@@ -2,6 +2,14 @@ import type { IView } from "./index.js";
 import { toIdentifier, translate } from "./strings.js";
 import { PropagatedKey, propagateKey, TreeNode } from "./tree.js";
 
+/**
+ * Generate nested modules of constants for the given views
+ * @param views The views to declare constants for
+ * @param packageName The name of the package these were read from - this name is trimmed from the root if it is common across all declared views
+ * @param directory The directory root to generate files to
+ * @param translations The values read from `package.nls.json`
+ * @returns A promise that resolves when writing is complete
+ */
 export async function writeViewsAsync(
     views: Record<string, IView[]>,
     packageName: string | undefined,
