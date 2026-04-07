@@ -6,6 +6,14 @@ import type { IConfigurationHeader, IPropertyMetadata } from "./index.js";
 import { toIdentifier, translate } from "./strings.js";
 import { TreeNode } from "./tree.js";
 
+/**
+ * Generate nested modules of types and wrapper functions for the given configuration
+ * @param configuration The configuration to declare types and wrappers for
+ * @param packageName The name of the package these were read from - this name is trimmed from the root if it is common across all declared commands
+ * @param directory The directory root to generate files to
+ * @param translations The values read from `package.nls.json`
+ * @returns A promise that resolves when writing is complete
+ */
 export async function writeConfigurationAsync(
     configuration: IConfigurationHeader | IConfigurationHeader[],
     packageName: string | undefined,
@@ -135,6 +143,12 @@ export async function writeConfigurationAsync(
     );
 }
 
+/**
+ * Invoke `json-schema-to-typescript` with specific parameters
+ * @param typeObject The JSON schema type
+ * @param name The name to give the object
+ * @returns A promise that resolves to the type string split into lines
+ */
 async function getTypeStringLines(typeObject: JSONSchema, name: string): Promise<string[]> {
     return (
         await compile(typeObject, name, {
@@ -157,7 +171,13 @@ async function getTypeStringLines(typeObject: JSONSchema, name: string): Promise
         .filter((s) => s !== undefined && s !== null && s.trim() !== "");
 }
 
-const InterfaceInspect: (string | typeof IncreaseIndent | typeof DecreaseIndent | undefined)[] = [
+/** A preformatted set of lines to define the result for the `inspect*` functions */
+const InterfaceInspect: readonly (
+    | string
+    | typeof IncreaseIndent
+    | typeof DecreaseIndent
+    | undefined
+)[] = [
     "export interface Inspect<T> {",
     IncreaseIndent,
     "/**",
@@ -212,4 +232,4 @@ const InterfaceInspect: (string | typeof IncreaseIndent | typeof DecreaseIndent 
     DecreaseIndent,
     "}",
     undefined,
-];
+] as const;
