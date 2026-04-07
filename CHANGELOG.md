@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `ICommand` won't have pre-localized strings in `package.json`. Was from a misunderstanding of the way VSCode source code handled `package.json`.
+
 ## [0.1.0] - 2026/04/06
 
 - Initial release

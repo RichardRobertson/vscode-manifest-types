@@ -32,13 +32,8 @@ export interface IExtensionContributions {
 
 export interface ICommand {
     command?: string;
-    title?: string | ILocalizedString;
-    category?: string | ILocalizedString;
-}
-
-export interface ILocalizedString {
-    value?: string;
-    original?: string;
+    title?: string;
+    category?: string;
 }
 
 export interface IView {

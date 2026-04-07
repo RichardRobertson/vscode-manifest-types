@@ -19,18 +19,8 @@ export async function writeCommandsAsync(
     root.fixBranchLeafCollisions("command");
     await root.writeToModulesAsync(
         ({ leafKey: commandKey, leaf: { command, title, category }, childIndex }, writer) => {
-            if (typeof title === "object") {
-                title = JSON.stringify(title);
-            }
-            if (typeof title === "string") {
-                title = translate(title, translations);
-            }
-            if (typeof category === "object") {
-                category = JSON.stringify(category);
-            }
-            if (typeof category === "string") {
-                category = translate(category, translations);
-            }
+            title = translate(title, translations);
+            category = translate(category, translations);
             if (childIndex !== 0) {
                 writer.writeLine();
             }
