@@ -33,17 +33,11 @@ export async function writeCommandsAsync(
                 writer.writeLine();
             }
             if (title !== undefined && category !== undefined) {
-                writer.writeLines(
-                    "/**",
-                    ` * **Title**: ${title}`,
-                    " *",
-                    ` * **Category**: ${category}`,
-                    " */"
-                );
+                writer.writeLine(`/** ${title} (${category}) */`);
             } else if (title !== undefined) {
-                writer.writeLine(`/** **Title**: ${title} */`);
+                writer.writeLine(`/** ${title} */`);
             } else if (category !== undefined) {
-                writer.writeLine(`/** **Category**: ${category} */`);
+                writer.writeLine(`/** (${category}) */`);
             }
             writer.writeLine(`export const ${commandKey} = "${command}";`);
         },
