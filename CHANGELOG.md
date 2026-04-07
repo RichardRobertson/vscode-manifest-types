@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Cleanup command JSDoc gen
 - Cleanup configuration JSDoc gen
+- Rename configuration type gen from `KeyType` to just `Key`
 
 ### Fixed
 

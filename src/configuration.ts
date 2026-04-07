@@ -61,7 +61,6 @@ export async function writeConfigurationAsync(
             const propertyMetadata: IPropertyMetadata = propertyHeader;
             const propertyType: JSONSchema = propertyHeader;
             const propertyNamePascal = pascalCase(configurationKey);
-            const propertyTypeName = `${propertyNamePascal}Type`;
             if (leafIndex === 0) {
                 if (childIndex !== 0) {
                     writer.writeLine();
@@ -81,7 +80,7 @@ export async function writeConfigurationAsync(
             }
             writer.writeLines(
                 undefined,
-                ...(await getTypeStringLines(propertyType, propertyTypeName)),
+                ...(await getTypeStringLines(propertyType, propertyNamePascal)),
                 undefined
             );
             const description = translate(
@@ -111,23 +110,23 @@ export async function writeConfigurationAsync(
                 `export const ${configurationKey}FullKey = \`\${section}.\${${configurationKey}Key}\` as const;`,
                 undefined,
                 ...jsdoc,
-                `export function get${propertyNamePascal}(): ${propertyTypeName} {`,
+                `export function get${propertyNamePascal}(): ${propertyNamePascal} {`,
                 IncreaseIndent,
-                `return vscode.workspace.getConfiguration(section).get<${propertyTypeName}>(${configurationKey}Key, ${JSON.stringify(propertyHeader.default)});`,
+                `return vscode.workspace.getConfiguration(section).get<${propertyNamePascal}>(${configurationKey}Key, ${JSON.stringify(propertyHeader.default)});`,
                 DecreaseIndent,
                 "}",
                 undefined,
                 ...jsdoc,
-                `export function update${propertyNamePascal}(value?: ${propertyTypeName}, configurationTarget?: boolean | vscode.ConfigurationTarget | null, overrideInLanguage?: boolean): Thenable<void> {`,
+                `export function update${propertyNamePascal}(value?: ${propertyNamePascal}, configurationTarget?: boolean | vscode.ConfigurationTarget | null, overrideInLanguage?: boolean): Thenable<void> {`,
                 IncreaseIndent,
                 `return vscode.workspace.getConfiguration(section).update(${configurationKey}Key, value, configurationTarget, overrideInLanguage);`,
                 DecreaseIndent,
                 "}",
                 undefined,
                 ...jsdoc,
-                `export function inspect${propertyNamePascal}(): Inspect<${propertyTypeName}> {`,
+                `export function inspect${propertyNamePascal}(): Inspect<${propertyNamePascal}> {`,
                 IncreaseIndent,
-                `const inspect = vscode.workspace.getConfiguration(section).inspect<${propertyTypeName}>(${configurationKey}Key);`,
+                `const inspect = vscode.workspace.getConfiguration(section).inspect<${propertyNamePascal}>(${configurationKey}Key);`,
                 "if (inspect === undefined) {",
                 IncreaseIndent,
                 "throw new Error();",
