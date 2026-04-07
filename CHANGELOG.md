@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Public API documentation
+- Configuration section, key, and full key constants
 
 ### Changed
 
 - Cleanup command JSDoc gen
+- Cleanup configuration JSDoc gen
 
 ### Fixed
 

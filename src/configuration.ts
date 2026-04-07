@@ -73,6 +73,11 @@ export async function writeConfigurationAsync(
                         `import type { Inspect } from "${"../".repeat(parentPath.length - 1)}index.js";`
                     );
                 }
+                const section = configurationFullKey.slice(
+                    0,
+                    configurationFullKey.lastIndexOf(".")
+                );
+                writer.writeLines(undefined, `export const section = "${section}" as const;`);
             }
             writer.writeLines(
                 undefined,
@@ -89,41 +94,40 @@ export async function writeConfigurationAsync(
             );
             let jsdoc: string[] = [];
             if (description !== undefined && deprecated !== undefined) {
-                jsdoc = [
-                    "/**",
-                    ` * **Description**: ${description}`,
-                    " *",
-                    ` * @deprecated ${deprecated}`,
-                    " */",
-                ];
+                jsdoc = ["/**", ` * ${description}`, " *", ` * @deprecated ${deprecated}`, " */"];
             } else if (description !== undefined) {
-                jsdoc = [`/** **Description**: ${description} */`];
+                jsdoc = [`/** ${description} */`];
             } else if (deprecated !== undefined) {
                 jsdoc = [`/** @deprecated ${deprecated} */`];
             }
-            const section = configurationFullKey.slice(0, configurationFullKey.lastIndexOf("."));
             const originalKey = configurationFullKey.slice(
                 configurationFullKey.lastIndexOf(".") + 1
             );
             writer.writeLines(
                 ...jsdoc,
+                `export const ${configurationKey}Key = "${originalKey}" as const;`,
+                undefined,
+                ...jsdoc,
+                `export const ${configurationKey}FullKey = \`\${section}.\${${configurationKey}Key}\` as const;`,
+                undefined,
+                ...jsdoc,
                 `export function get${propertyNamePascal}(): ${propertyTypeName} {`,
                 IncreaseIndent,
-                `return vscode.workspace.getConfiguration("${section}").get<${propertyTypeName}>("${originalKey}", ${JSON.stringify(propertyHeader.default)});`,
+                `return vscode.workspace.getConfiguration(section).get<${propertyTypeName}>(${configurationKey}Key, ${JSON.stringify(propertyHeader.default)});`,
                 DecreaseIndent,
                 "}",
                 undefined,
                 ...jsdoc,
                 `export function update${propertyNamePascal}(value?: ${propertyTypeName}, configurationTarget?: boolean | vscode.ConfigurationTarget | null, overrideInLanguage?: boolean): Thenable<void> {`,
                 IncreaseIndent,
-                `return vscode.workspace.getConfiguration("${section}").update("${originalKey}", value, configurationTarget, overrideInLanguage);`,
+                `return vscode.workspace.getConfiguration(section).update(${configurationKey}Key, value, configurationTarget, overrideInLanguage);`,
                 DecreaseIndent,
                 "}",
                 undefined,
                 ...jsdoc,
                 `export function inspect${propertyNamePascal}(): Inspect<${propertyTypeName}> {`,
                 IncreaseIndent,
-                `const inspect = vscode.workspace.getConfiguration("${section}").inspect<${propertyTypeName}>("${originalKey}");`,
+                `const inspect = vscode.workspace.getConfiguration(section).inspect<${propertyTypeName}>(${configurationKey}Key);`,
                 "if (inspect === undefined) {",
                 IncreaseIndent,
                 "throw new Error();",
