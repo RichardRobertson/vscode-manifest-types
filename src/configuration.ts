@@ -9,7 +9,7 @@ import { TreeNode } from "./tree.js";
 /**
  * Generate nested modules of types and wrapper functions for the given configuration
  * @param configuration The configuration to declare types and wrappers for
- * @param packageName The name of the package these were read from - this name is trimmed from the root if it is common across all declared commands
+ * @param packageName The name of the package these were read from - this name is trimmed from the root if it is common across all declared configurations
  * @param directory The directory root to generate files to
  * @param translations The values read from `package.nls.json`
  * @returns A promise that resolves when writing is complete
