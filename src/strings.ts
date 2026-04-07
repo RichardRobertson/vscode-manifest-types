@@ -19,9 +19,20 @@ export function translate(
  * @returns A string found from `translations`, or the original `placeholder` value, or `undefined` if `placeholder === undefined`
  */
 export function translate(
-    placeholder: string | undefined,
+    placeholder: undefined,
     translations: Record<string, string> | undefined
 ): undefined;
+
+/**
+ * Lookup a placeholder from the given translations map
+ * @param placeholder The key to use in `translations`, or `undefined`
+ * @param translations The map of translation keys to human readable strings
+ * @returns A string found from `translations`, or the original `placeholder` value, or `undefined` if `placeholder === undefined`
+ */
+export function translate(
+    placeholder: string | undefined,
+    translations: Record<string, string> | undefined
+): string | undefined;
 
 export function translate(
     placeholder: string | undefined,
