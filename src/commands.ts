@@ -2,6 +2,14 @@ import type { ICommand } from "./index.js";
 import { toIdentifier, translate } from "./strings.js";
 import { TreeNode } from "./tree.js";
 
+/**
+ * Generate nested modules of constants for the given commands
+ * @param commands The commands to declare constants for
+ * @param packageName The name of the package these were read from - this name is trimmed from the root if it is common across all declared commands
+ * @param directory The directory root to generate files to
+ * @param translations The values read from `package.nls.json`
+ * @returns A promise that resolves when writing is complete
+ */
 export async function writeCommandsAsync(
     commands: ICommand[],
     packageName: string | undefined,
