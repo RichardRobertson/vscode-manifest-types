@@ -153,6 +153,7 @@ export async function writeConfigurationAsync(
  * @returns A promise that resolves to the type string split into lines
  */
 async function getTypeStringLines(typeObject: JSONSchema, name: string): Promise<string[]> {
+    typeObject.$id = RootType;
     return (
         await compile(typeObject, name, {
             additionalProperties: false,
@@ -167,12 +168,23 @@ async function getTypeStringLines(typeObject: JSONSchema, name: string): Promise
                 trailingComma: "all",
                 useTabs: false,
             },
+            customName(
+                schema: JSONSchema,
+                keyNameFromDefinition: string | undefined
+            ): string | undefined {
+                if (schema.$id === RootType) {
+                    return name;
+                }
+                return keyNameFromDefinition;
+            },
         })
     )
         .trimEnd()
         .split("\n")
         .filter((s) => s !== undefined && s !== null && s.trim() !== "");
 }
+
+const RootType: unique symbol = Symbol();
 
 /** A preformatted set of lines to define the result for the `inspect*` functions */
 const InterfaceInspect: readonly (
